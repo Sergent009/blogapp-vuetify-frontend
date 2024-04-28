@@ -1,7 +1,6 @@
 <template>
   <nav>
     <v-toolbar dark app>
-      <!-- <v-toolbar-side-icon /> -->
        <v-app-bar-nav-icon />
       <v-toolbar-title class="text-uppercase yellow--text">
         Mannan's <span class="font-weight-light">Mind</span> Admin
@@ -18,6 +17,13 @@
 <script>
 export default {
   name: "MyNavbar",
+  data(){
+    return{
+      drawer: false,
+      newPostDialog: false,
+      newPost: {}
+    }
+  }
 };
 </script>
 
