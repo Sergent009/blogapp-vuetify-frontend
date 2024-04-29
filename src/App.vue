@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar @newPost="newPost" />
     <v-main>
-      <Dashboard :posts="posts" />
+      <Dashboard :posts="posts" @updatePost="updatePost" @removePost="removePost" />
     </v-main>
   </v-app>
 </template>
@@ -57,6 +57,48 @@ export default {
         }
         return 0
       })
+    },
+
+    updatePost(post){
+      let payload = {
+        _id: post._id,
+        title: post.title,
+        author: post.author,
+        content: post.content,
+        timestamp: post.timestamp
+      }
+
+      fetch('http://localhost:3000/api/post/update', {
+        method: 'POST',
+        headers:{
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(data => {
+        return data.json()
+      })
+      .then(json => {
+        console.log(json)
+      })
+    },
+
+    removePost(index){
+      fetch('http://localhost:3000/api/post/remove', {
+        method: 'POST',
+        headers:{
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({_id: this.posts[index]._id})
+      })
+      .then(data => {
+        return data.json()
+      })
+      .then(json => {
+        console.log(json)
+      })
+
+      this.posts.splice(index, 1)
     }
   },
 
